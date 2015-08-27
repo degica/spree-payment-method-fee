@@ -9,24 +9,14 @@ describe Spree::PaymentMethodFee do
       Spree::PaymentMethodFee.new( payment_method_id: payment_method.id, amount: 1, currency: 'USD' )
     end
 
-    context 'with an payment method that supports payment profiles' do
-      let(:payment_profiles_supported) { true }
-      it { should be_valid }
-
-      context 'when a fee already exists on the payment method with the same currency' do
-        before do
-          Spree::PaymentMethodFee.create(
-            payment_method_id: payment_method.id,
-            amount: 1,
-            currency: 'USD'
-          )
-        end
-        it { should_not be_valid }
+    context 'when a fee already exists on the payment method with the same currency' do
+      before do
+        Spree::PaymentMethodFee.create(
+          payment_method_id: payment_method.id,
+          amount: 1,
+          currency: 'USD'
+        )
       end
-    end
-
-    context 'with an payment method that doesnt support payment profiles' do
-      let(:payment_profiles_supported) { false }
       it { should_not be_valid }
     end
   end
